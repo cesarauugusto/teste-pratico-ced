@@ -1,0 +1,166 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-soft: #eef8f1;
+  --bg-main: #e3f3e8;
+  --card: #ffffff;
+  --primary: #2e8b57;
+  --primary-dark: #226b43;
+  --primary-soft: #d8efe0;
+  --text: #213126;
+  --muted: #6b7d70;
+  --border: #d7e7db;
+  --danger: #c62828;
+  --success: #1f8a4c;
+  --shadow: 0 12px 30px rgba(31, 76, 47, 0.08);
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--bg-main);
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(227, 243, 232, 0.88), rgba(227, 243, 232, 0.9)),
+    url("./assets/hero.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.page-content {
+  flex: 1;
+  padding: 28px;
+}
+
+.page-title {
+  font-size: 32px;
+  margin-bottom: 22px;
+  color: var(--text);
+}
+
+.page-panel {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 26px;
+  box-shadow: var(--shadow);
+}
+
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.list-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.info-card {
+  background: #f9fdf9;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(31, 76, 47, 0.04);
+}
+
+.info-card h3 {
+  margin-bottom: 8px;
+}
+
+.info-card p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.action-btn,
+.secondary-btn,
+.danger-btn {
+  border: none;
+  border-radius: 14px;
+  padding: 12px 18px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.action-btn {
+  background: var(--primary);
+  color: white;
+}
+
+.action-btn:hover {
+  background: var(--primary-dark);
+}
+
+.secondary-btn {
+  background: var(--primary-soft);
+  color: var(--text);
+}
+
+.danger-btn {
+  background: #ffe6e6;
+  color: #8b1f1f;
+}
+
+.form-block {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-block input,
+.form-block select,
+.form-block textarea {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 15px;
+  outline: none;
+  background: #fff;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.error-text {
+  color: var(--danger);
+  margin-top: 14px;
+}
+
+.success-text {
+  color: var(--success);
+  margin-top: 14px;
+}
+
+@media (max-width: 960px) {
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .grid-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .page-content {
+    padding: 18px;
+  }
+}

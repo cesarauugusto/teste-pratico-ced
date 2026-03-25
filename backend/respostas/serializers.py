@@ -7,13 +7,13 @@ from users.models import User
 class AlunoResumoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'name']
+        fields = ["id", "name"]
 
 
 class AtividadeResumoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Atividade
-        fields = ['id', 'titulo']
+        fields = ["id", "titulo"]
 
 
 class RespostaSerializer(serializers.ModelSerializer):
@@ -22,19 +22,19 @@ class RespostaSerializer(serializers.ModelSerializer):
 
     atividade_id = serializers.PrimaryKeyRelatedField(
         queryset=Atividade.objects.all(),
-        source='atividade',
+        source="atividade",
         write_only=True
     )
 
     class Meta:
         model = Resposta
-        fields = '__all__'
-        read_only_fields = ('aluno', 'nota', 'feedback')
+        fields = "__all__"
+        read_only_fields = ("aluno", "nota", "feedback")
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
 
-        if data.get('feedback') == "":
-            data['feedback'] = None
+        if data.get("feedback") == "":
+            data["feedback"] = None
 
         return data

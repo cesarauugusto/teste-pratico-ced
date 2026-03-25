@@ -1,0 +1,98 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f8f7fb;
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 28px;
+}
+
+.dashboard-title {
+  margin: 0 0 22px;
+  color: #2e2737;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(230px, 1fr));
+  gap: 22px;
+}
+
+.page-card {
+  background: white;
+  border-radius: 24px;
+  padding: 26px;
+  box-shadow: 0 12px 30px rgba(42, 27, 71, 0.06);
+}
+
+.form-block {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-block input,
+.form-block textarea {
+  padding: 14px 16px;
+  border: 1px solid #d9d1e7;
+  border-radius: 14px;
+  outline: none;
+  font-size: 15px;
+}
+
+.form-block button {
+  border: none;
+  background: #5b44db;
+  color: white;
+  padding: 13px 18px;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.list-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.history-card {
+  background: #faf8ff;
+  border: 1px solid #ebe3fb;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.history-card h3 {
+  margin-top: 0;
+  color: #31283d;
+}
+
+.history-card p {
+  color: #6d647b;
+}
+
+.history-card span {
+  color: #5d52aa;
+  font-size: 14px;
+}
+
+.success-text {
+  color: #1b7d39;
+  margin-top: 16px;
+}
+
+.error-text {
+  color: #c62828;
+  margin-top: 16px;
+}
+
+@media (max-width: 1000px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-layout {
+    flex-direction: column;
+  }
+}

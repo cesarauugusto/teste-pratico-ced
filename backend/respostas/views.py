@@ -14,37 +14,37 @@ class CriarRespostaView(APIView):
     def post(self, request):
         user = request.user
 
-        if user.role != 'ALUNO':
+        if user.role != "ALUNO":
             return Response(
-                {'detail': 'Apenas alunos podem enviar respostas.'},
+                {"detail": "Apenas alunos podem enviar respostas."},
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        atividade_id = request.data.get('atividade')
+        atividade_id = request.data.get("atividade_id") or request.data.get("atividade")
 
         try:
             atividade = Atividade.objects.get(id=atividade_id)
         except Atividade.DoesNotExist:
             return Response(
-                {'detail': 'Atividade não encontrada.'},
+                {"detail": "Atividade não encontrada."},
                 status=status.HTTP_404_NOT_FOUND
             )
 
         if atividade.turma != user.turma:
             return Response(
-                {'detail': 'Você não pode responder atividades de outra turma.'},
+                {"detail": "Você não pode responder atividades de outra turma."},
                 status=status.HTTP_403_FORBIDDEN
             )
 
         if Resposta.objects.filter(atividade=atividade, aluno=user).exists():
             return Response(
-                {'detail': 'Você já respondeu essa atividade.'},
+                {"detail": "Você já respondeu essa atividade."},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         serializer = RespostaSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(aluno=user)
+        serializer.save(aluno=user, atividade=atividade)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -55,9 +55,9 @@ class CorrigirRespostaView(APIView):
     def patch(self, request, id):
         user = request.user
 
-        if user.role != 'PROFESSOR':
+        if user.role != "PROFESSOR":
             return Response(
-                {'detail': 'Apenas professores podem corrigir.'},
+                {"detail": "Apenas professores podem corrigir."},
                 status=status.HTTP_403_FORBIDDEN
             )
 
@@ -65,22 +65,22 @@ class CorrigirRespostaView(APIView):
             resposta = Resposta.objects.get(id=id)
         except Resposta.DoesNotExist:
             return Response(
-                {'detail': 'Resposta não encontrada.'},
+                {"detail": "Resposta não encontrada."},
                 status=status.HTTP_404_NOT_FOUND
             )
 
         if resposta.atividade.professor != user:
             return Response(
-                {'detail': 'Você não pode corrigir essa atividade.'},
+                {"detail": "Você não pode corrigir essa atividade."},
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        nota = request.data.get('nota')
-        feedback = request.data.get('feedback')
+        nota = request.data.get("nota")
+        feedback = request.data.get("feedback")
 
         if nota is None:
             return Response(
-                {'detail': 'Nota é obrigatória.'},
+                {"detail": "Nota é obrigatória."},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -88,13 +88,13 @@ class CorrigirRespostaView(APIView):
             nota = float(nota)
         except (TypeError, ValueError):
             return Response(
-                {'detail': 'Nota deve ser numérica.'},
+                {"detail": "Nota deve ser numérica."},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         if not (0 <= nota <= 10):
             return Response(
-                {'detail': 'Nota deve ser entre 0 e 10.'},
+                {"detail": "Nota deve ser entre 0 e 10."},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -103,24 +103,55 @@ class CorrigirRespostaView(APIView):
         resposta.save()
 
         return Response({
-            'id': resposta.id,
-            'nota': resposta.nota,
-            'feedback': resposta.feedback
+            "id": resposta.id,
+            "nota": resposta.nota,
+            "feedback": resposta.feedback
         }, status=status.HTTP_200_OK)
-    
+
+
 class MinhasRespostasView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         user = request.user
 
-        if user.role != 'ALUNO':
+        if user.role != "ALUNO":
             return Response(
-                {'detail': 'Apenas alunos podem ver suas respostas.'},
-                status=403
+                {"detail": "Apenas alunos podem ver suas respostas."},
+                status=status.HTTP_403_FORBIDDEN
             )
 
-        respostas = Resposta.objects.filter(aluno=user)
+        respostas = Resposta.objects.filter(aluno=user).order_by("-created_at")
+        serializer = RespostaSerializer(respostas, many=True)
+        return Response(serializer.data)
 
+
+class RespostasPorAtividadeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, id):
+        user = request.user
+
+        if user.role != "PROFESSOR":
+            return Response(
+                {"detail": "Apenas professores podem visualizar respostas da atividade."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        try:
+            atividade = Atividade.objects.get(id=id)
+        except Atividade.DoesNotExist:
+            return Response(
+                {"detail": "Atividade não encontrada."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        if atividade.professor != user:
+            return Response(
+                {"detail": "Você não pode visualizar respostas dessa atividade."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        respostas = Resposta.objects.filter(atividade=atividade).order_by("-created_at")
         serializer = RespostaSerializer(respostas, many=True)
         return Response(serializer.data)

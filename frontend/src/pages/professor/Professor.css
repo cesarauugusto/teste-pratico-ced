@@ -51,6 +51,18 @@
   cursor: pointer;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+}
+
 .list-grid {
   display: grid;
   gap: 16px;

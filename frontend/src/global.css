@@ -37,7 +37,7 @@ textarea {
   min-height: 100vh;
   background:
     linear-gradient(rgba(227, 243, 232, 0.88), rgba(227, 243, 232, 0.9)),
-    url("./assets/hero.png");
+    url("./assets/fundo.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

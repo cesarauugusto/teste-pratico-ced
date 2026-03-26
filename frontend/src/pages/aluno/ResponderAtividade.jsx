@@ -10,12 +10,10 @@ export default function ResponderAtividade() {
 
   const atividade = state?.atividade;
   const [texto, setTexto] = useState("");
-  const [mensagem, setMensagem] = useState("");
   const [erro, setErro] = useState("");
 
   async function enviarResposta(e) {
     e.preventDefault();
-    setMensagem("");
     setErro("");
 
     try {
@@ -24,8 +22,8 @@ export default function ResponderAtividade() {
         texto_resposta: texto,
       });
 
-      setMensagem("Resposta enviada com sucesso.");
-      setTexto("");
+      alert("Resposta enviada com sucesso.");
+      navigate("/aluno");
     } catch (err) {
       const detalhe =
         err.response?.data?.detail ||
@@ -71,7 +69,6 @@ export default function ResponderAtividade() {
             </div>
           </form>
 
-          {mensagem && <p className="success-text">{mensagem}</p>}
           {erro && <p className="error-text">{erro}</p>}
         </div>
       </main>

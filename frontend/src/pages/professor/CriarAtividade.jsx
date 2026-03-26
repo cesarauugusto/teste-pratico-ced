@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import { api } from "../../api/client";
 
@@ -8,8 +9,8 @@ export default function CriarAtividade() {
   const [turma, setTurma] = useState("");
   const [dataEntrega, setDataEntrega] = useState("");
   const [turmas, setTurmas] = useState([]);
-  const [mensagem, setMensagem] = useState("");
   const [erro, setErro] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function carregarTurmas() {
@@ -26,7 +27,6 @@ export default function CriarAtividade() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setMensagem("");
     setErro("");
 
     try {
@@ -37,11 +37,8 @@ export default function CriarAtividade() {
         data_entrega: dataEntrega,
       });
 
-      setMensagem("Atividade criada com sucesso.");
-      setTitulo("");
-      setDescricao("");
-      setTurma("");
-      setDataEntrega("");
+      alert("Atividade criada com sucesso.");
+      navigate("/professor");
     } catch (err) {
       const detalhe =
         err.response?.data?.detail || "Erro ao criar atividade.";
@@ -91,7 +88,6 @@ export default function CriarAtividade() {
             </button>
           </form>
 
-          {mensagem && <p className="success-text">{mensagem}</p>}
           {erro && <p className="error-text">{erro}</p>}
         </div>
       </main>

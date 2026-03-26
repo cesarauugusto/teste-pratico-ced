@@ -1,13 +1,13 @@
-from users.models import User
-from turmas.models import Turma
-from atividades.models import Atividade
-from respostas.models import Resposta
 import os
 import django
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 
+from users.models import User
+from turmas.models import Turma
+from atividades.models import Atividade
+from respostas.models import Resposta
 
 turma1, _ = Turma.objects.get_or_create(nome="8º Ano A")
 turma2, _ = Turma.objects.get_or_create(nome="9º Ano A")

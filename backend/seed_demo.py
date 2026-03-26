@@ -1,7 +1,7 @@
-from respostas.models import Resposta
-from atividades.models import Atividade
-from turmas.models import Turma
 from users.models import User
+from turmas.models import Turma
+from atividades.models import Atividade
+from respostas.models import Resposta
 import os
 import django
 

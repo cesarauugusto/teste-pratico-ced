@@ -77,15 +77,18 @@ export default function CriarAtividade() {
               ))}
             </select>
 
-            <div className="form-group">
-            <label htmlFor="dataEntrega">Data de entrega</label>
-            <input
-              id="dataEntrega"
-              type="date"
-              value={dataEntrega}
-              onChange={(e) => setDataEntrega(e.target.value)}
-            />
-          </div>
+            <div className="date-inline">
+              <label htmlFor="dataEntrega">
+                Data de entrega da atividade:
+              </label>
+
+              <input
+                id="dataEntrega"
+                type="date"
+                value={dataEntrega}
+                onChange={(e) => setDataEntrega(e.target.value)}
+              />
+            </div>
 
             <button type="submit" className="action-btn">
               Criar Atividade

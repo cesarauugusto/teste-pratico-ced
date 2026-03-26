@@ -77,9 +77,10 @@ export default function CriarAtividade() {
               ))}
             </select>
 
-            <div className="form-group full-width">
-            <label>Data de entrega</label>
+            <div className="form-group">
+            <label htmlFor="dataEntrega">Data de entrega</label>
             <input
+              id="dataEntrega"
               type="date"
               value={dataEntrega}
               onChange={(e) => setDataEntrega(e.target.value)}

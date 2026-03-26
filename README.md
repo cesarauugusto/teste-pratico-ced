@@ -25,7 +25,6 @@ docker compose up --build
 > Esse comando irá:
 > - Construir os containers  
 > - Subir backend, frontend e banco de dados 
-> - Aplicar migrações automaticamente (se configurado no projeto)
 
 ---
 
